@@ -1,3 +1,4 @@
 {
-  "presets": ["es2016", ["es2015", { "modules": false }]]
+  "presets": ["es2016", ["es2015", { "modules": false }]],
+  "plugins": ["transform-object-assign"]
 }
