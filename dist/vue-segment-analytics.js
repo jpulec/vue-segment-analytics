@@ -1,6 +1,6 @@
 /*!
  * vue-segment-analytics v0.3.0
- * (c) 2017 Ryan Stuart
+ * (c) 2018 Ryan Stuart
  * Released under the MIT License.
  */
 (function (global, factory) {
@@ -117,6 +117,8 @@ function init(config, callback) {
   return window.analytics;
 }
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 /**
  * Vue installer
  * @param  {Vue instance} Vue
@@ -125,23 +127,23 @@ function init(config, callback) {
 function install(Vue) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  var config = Object.assign({
+  var config = _extends({
     debug: false,
     pageCategory: ''
   }, options);
 
-  var analytics = init(config, function () {
-    // Page tracking
-    if (config.router !== undefined) {
-      config.router.afterEach(function (to, from) {
-        // Make a page call for each navigation event
-        window.analytics.page(config.pageCategory, to.name || '', {
-          path: to.fullPath,
-          referrer: from.fullPath
-        });
+  var analytics = init(config, function () {});
+
+  // Page tracking
+  if (config.router !== undefined) {
+    config.router.afterEach(function (to, from) {
+      // Make a page call for each navigation event
+      analytics.page(config.pageCategory, to.name || '', {
+        path: to.fullPath,
+        referrer: from.fullPath
       });
-    }
-  });
+    });
+  }
 
   // Setup instance access
   Object.defineProperty(Vue, '$segment', {
